@@ -1,325 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- cute fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600&family=DM+Sans:wght@300;400&family=Italiana&display=swap" rel="stylesheet">
+<!-- pretty fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <style>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:ital,wght@1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
     * {
-      box-sizing: border-box;
+        box-sizing: border-box;
     }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
     }
 
     body {
-      background: #081f58;
-      color: #f8f8ff;
+        background: #0b2868;
+        color: #f8f7f4;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-      font-family: "DM Sans", sans-serif;
+        overflow: hidden;
     }
 
-    .clock-widget {
-      width: 100%;
-      height: 180px;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      position: relative;
+    .clock {
+        width: 100%;
+        text-align: center;
+        padding: 24px 20px;
     }
 
-    /* tiny stars */
     .stars {
-      font-family: serif;
-      font-size: 17px;
-      letter-spacing: 15px;
-
-      color: #b7c8ff;
-      margin-bottom: 3px;
-
-      transform: translateX(7px);
+        color: #b6c9ff;
+        font-size: 18px;
+        letter-spacing: 22px;
+        margin-bottom: -4px;
+        padding-left: 22px;
     }
 
     .time-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-
-      gap: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
     }
 
     #time {
-      font-family: "Bodoni Moda", serif;
-      font-size: clamp(60px, 10vw, 88px);
-      line-height: 0.95;
-
-      letter-spacing: -4px;
-      font-weight: 600;
+        font-family: "Bodoni Moda", serif;
+        font-size: clamp(64px, 13vw, 108px);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -6px;
     }
 
     #ampm {
-      font-family: "DM Sans", sans-serif;
-      font-size: 13px;
-      letter-spacing: 3px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 300;
+        font-size: 15px;
+        letter-spacing: 4px;
 
-      color: #b8c6f5;
-
-      margin-top: 10px;
+        margin-top: 18px;
     }
 
     #date {
-      margin-top: 11px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 300;
 
-      font-family: "DM Sans", sans-serif;
-      font-size: 13px;
-      font-weight: 300;
+        font-size: clamp(11px, 2vw, 15px);
+        letter-spacing: 4px;
+        text-transform: uppercase;
 
-      letter-spacing: 3px;
-      text-transform: uppercase;
-
-      color: #d4dcfa;
+        margin-top: 12px;
     }
 
     .pretend {
-      margin-top: 10px;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
 
-      font-family: "Italiana", serif;
-      font-size: 14px;
-      font-style: italic;
+        color: #bac7e9;
+        font-size: 20px;
 
-      color: #aebce8;
+        margin-top: 11px;
     }
-
-    /* little glow without making it look tacky */
-    #time {
-      text-shadow:
-        0 0 12px rgba(190, 205, 255, 0.06);
-    }
-
-    @media (max-width: 500px) {
-      .clock-widget {
-        height: 155px;
-      }
-
-      #time {
-        font-size: 58px;
-      }
-
-      #date {
-        font-size: 11px;
-        letter-spacing: 2px;
-      }
-
-      .pretend {
-        font-size: 12px;
-      }
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="clock-widget">
+<div class="clock">
 
-    <div class="stars">
-      ⋆ ✦ ⋆
-    </div>
+    <div class="stars">⋆ ✦ ⋆</div>
 
     <div class="time-row">
-      <div id="time">2:21</div>
-      <div id="ampm">AM</div>
+        <div id="time">2:31</div>
+        <div id="ampm">AM</div>
     </div>
 
-    <div id="date">
-      FRIDAY, SEPTEMBER 4
-    </div>
+    <div id="date">FRIDAY, SEPTEMBER 4</div>
 
-    <div class="pretend">
-      pretend.org
-    </div>
+    <div class="pretend">pretend.org</div>
 
-  </div>
+</div>
 
-  <script>
-    function updateClock() {
-      const now = new Date();
+<script>
+function updateClock() {
 
-      let hours = now.getHours();
-      const minutes = now.getMinutes();
+    const now = new Date();
 
-      const ampm = hours >= 12 ? "PM" : "AM";
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
 
-      hours = hours % 12;
-      hours = hours || 12;
+    const ampm = hours >= 12 ? "PM" : "AM";
 
-      const formattedMinutes =
+    hours = hours % 12;
+    hours = hours || 12;
+
+    const formattedMinutes =
         minutes.toString().padStart(2, "0");
 
-      document.getElementById("time").textContent =
+    document.getElementById("time").textContent =
         `${hours}:${formattedMinutes}`;
 
-      document.getElementById("ampm").textContent =
-        ampm;
+    document.getElementById("ampm").textContent = ampm;
 
-      const date = now.toLocaleDateString("en-US", {
+    const date = now.toLocaleDateString("en-US", {
         weekday: "long",
         month: "long",
         day: "numeric"
-      });
+    });
 
-      document.getElementById("date").textContent =
+    document.getElementById("date").textContent =
         date.toUpperCase();
-    }
+}
 
-    updateClock();
-
-    setInterval(updateClock, 1000);
-  </script>
-
-</body>
-</html>      font-size: clamp(60px, 10vw, 88px);
-      line-height: 0.95;
-
-      letter-spacing: -4px;
-      font-weight: 600;
-    }
-
-    #ampm {
-      font-family: "DM Sans", sans-serif;
-      font-size: 13px;
-      letter-spacing: 3px;
-
-      color: #b8c6f5;
-
-      margin-top: 10px;
-    }
-
-    #date {
-      margin-top: 11px;
-
-      font-family: "DM Sans", sans-serif;
-      font-size: 13px;
-      font-weight: 300;
-
-      letter-spacing: 3px;
-      text-transform: uppercase;
-
-      color: #d4dcfa;
-    }
-
-    .pretend {
-      margin-top: 10px;
-
-      font-family: "Italiana", serif;
-      font-size: 14px;
-      font-style: italic;
-
-      color: #aebce8;
-    }
-
-    /* little glow without making it look tacky */
-    #time {
-      text-shadow:
-        0 0 12px rgba(190, 205, 255, 0.06);
-    }
-
-    @media (max-width: 500px) {
-      .clock-widget {
-        height: 155px;
-      }
-
-      #time {
-        font-size: 58px;
-      }
-
-      #date {
-        font-size: 11px;
-        letter-spacing: 2px;
-      }
-
-      .pretend {
-        font-size: 12px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="clock-widget">
-
-    <div class="stars">
-      ⋆ ✦ ⋆
-    </div>
-
-    <div class="time-row">
-      <div id="time">2:21</div>
-      <div id="ampm">AM</div>
-    </div>
-
-    <div id="date">
-      FRIDAY, SEPTEMBER 4
-    </div>
-
-    <div class="pretend">
-      pretend.org
-    </div>
-
-  </div>
-
-  <script>
-    function updateClock() {
-      const now = new Date();
-
-      let hours = now.getHours();
-      const minutes = now.getMinutes();
-
-      const ampm = hours >= 12 ? "PM" : "AM";
-
-      hours = hours % 12;
-      hours = hours || 12;
-
-      const formattedMinutes =
-        minutes.toString().padStart(2, "0");
-
-      document.getElementById("time").textContent =
-        `${hours}:${formattedMinutes}`;
-
-      document.getElementById("ampm").textContent =
-        ampm;
-
-      const date = now.toLocaleDateString("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric"
-      });
-
-      document.getElementById("date").textContent =
-        date.toUpperCase();
-    }
-
-    updateClock();
-
-    setInterval(updateClock, 1000);
-  </script>
+updateClock();
+setInterval(updateClock, 1000);
+</script>
 
 </body>
 </html>
