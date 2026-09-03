@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: #071d53;
+    height: 180px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+  .clock {
+    width: 140px;
+    height: 140px;
+    border: 3px solid white;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .center {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    background: white;
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+  }
+
+  .hand {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+
+    transform-origin: bottom center;
+    border-radius: 10px;
+  }
+
+  .hour {
+    width: 5px;
+    height: 38px;
+    background: #9bb6ff;
+  }
+
+  .minute {
+    width: 4px;
+    height: 50px;
+    background: #527ed8;
+  }
+
+  .second {
+    width: 2px;
+    height: 55px;
+    background: white;
+  }
+
+  .mark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 2px;
+    height: 7px;
+    background: white;
+
+    transform-origin: 0 0;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="clock" id="clock">
+  <div class="hand hour" id="hour"></div>
+  <div class="hand minute" id="minute"></div>
+  <div class="hand second" id="second"></div>
+  <div class="center"></div>
+</div>
+
+<script>
+  const clock = document.getElementById("clock");
+
+  // create the little hour marks
+  for (let i = 0; i < 12; i++) {
+    const mark = document.createElement("div");
+    mark.className = "mark";
+
+    const angle = i * 30;
+
+    mark.style.transform =
+      `rotate(${angle}deg) translateY(-64px)`;
+
+    clock.appendChild(mark);
+  }
+
+  function updateClock() {
+    const now = new Date();
+
+    const seconds = now.getSeconds();
+    const minutes = now.getMinutes() + seconds / 60;
+    const hours = (now.getHours() % 12) + minutes / 60;
+
+    document.getElementById("second").style.transform =
+      `translateX(-50%) rotate(${seconds * 6}deg)`;
+
+    document.getElementById("minute").style.transform =
+      `translateX(-50%) rotate(${minutes * 6}deg)`;
+
+    document.getElementById("hour").style.transform =
+      `translateX(-50%) rotate(${hours * 30}deg)`;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
