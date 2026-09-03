@@ -4,16 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>pretend.org clock</title>
-
-  <!-- Cute fonts -->
+  <!-- cute fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600&family=DM+Sans:wght@300;400&family=Italiana&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -23,45 +17,45 @@
     html,
     body {
       margin: 0;
+      padding: 0;
       width: 100%;
       height: 100%;
+      overflow: hidden;
     }
 
     body {
-      background: #071b4d;
+      background: #081f58;
+      color: #f8f8ff;
 
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
 
-      overflow: hidden;
-
-      color: white;
+      font-family: "DM Sans", sans-serif;
     }
 
-    .clock-card {
+    .clock-widget {
       width: 100%;
       height: 180px;
 
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
 
       position: relative;
     }
 
-    .sparkles {
-      font-family: "DM Serif Display", serif;
+    /* tiny stars */
+    .stars {
+      font-family: serif;
+      font-size: 17px;
+      letter-spacing: 15px;
 
-      font-size: 18px;
-      letter-spacing: 8px;
+      color: #b7c8ff;
+      margin-bottom: 3px;
 
-      color: #a9bdff;
-
-      margin-bottom: 4px;
-
-      opacity: 0.9;
+      transform: translateX(7px);
     }
 
     .time-row {
@@ -69,105 +63,103 @@
       align-items: flex-start;
       justify-content: center;
 
-      gap: 8px;
+      gap: 7px;
     }
 
     #time {
-      font-family: "DM Serif Display", serif;
-
-      font-size: clamp(58px, 11vw, 95px);
-
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(60px, 10vw, 88px);
       line-height: 0.95;
 
-      letter-spacing: 1px;
-
-      color: #ffffff;
+      letter-spacing: -4px;
+      font-weight: 600;
     }
 
     #ampm {
-      font-family: "Manrope", sans-serif;
+      font-family: "DM Sans", sans-serif;
+      font-size: 13px;
+      letter-spacing: 3px;
 
-      font-size: 12px;
-      font-weight: 600;
+      color: #b8c6f5;
 
-      letter-spacing: 2px;
-
-      color: #9bb7ff;
-
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     #date {
-      font-family: "Manrope", sans-serif;
+      margin-top: 11px;
 
-      margin-top: 10px;
-
+      font-family: "DM Sans", sans-serif;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 300;
 
-      letter-spacing: 2px;
-
+      letter-spacing: 3px;
       text-transform: uppercase;
 
-      color: #b8c7ef;
+      color: #d4dcfa;
     }
 
-    .tiny-line {
-      width: 55px;
-      height: 1px;
+    .pretend {
+      margin-top: 10px;
 
-      margin-top: 12px;
-
-      background: #547ac8;
-
-      opacity: 0.75;
-    }
-
-    .label {
-      font-family: "DM Serif Display", serif;
-
+      font-family: "Italiana", serif;
+      font-size: 14px;
       font-style: italic;
 
-      margin-top: 7px;
+      color: #aebce8;
+    }
 
-      font-size: 12px;
+    /* little glow without making it look tacky */
+    #time {
+      text-shadow:
+        0 0 12px rgba(190, 205, 255, 0.06);
+    }
 
-      letter-spacing: 0.5px;
+    @media (max-width: 500px) {
+      .clock-widget {
+        height: 155px;
+      }
 
-      color: #879fd8;
+      #time {
+        font-size: 58px;
+      }
+
+      #date {
+        font-size: 11px;
+        letter-spacing: 2px;
+      }
+
+      .pretend {
+        font-size: 12px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="clock-card">
+  <div class="clock-widget">
 
-    <div class="sparkles">
+    <div class="stars">
       ⋆ ✦ ⋆
     </div>
 
     <div class="time-row">
-      <div id="time">12:00</div>
+      <div id="time">2:21</div>
       <div id="ampm">AM</div>
     </div>
 
     <div id="date">
-      FRIDAY · SEPTEMBER 4
+      FRIDAY, SEPTEMBER 4
     </div>
 
-    <div class="tiny-line"></div>
-
-    <div class="label">
+    <div class="pretend">
       pretend.org
     </div>
 
   </div>
 
-
   <script>
     function updateClock() {
-
       const now = new Date();
 
       let hours = now.getHours();
@@ -187,20 +179,212 @@
       document.getElementById("ampm").textContent =
         ampm;
 
-
-      const dateOptions = {
+      const date = now.toLocaleDateString("en-US", {
         weekday: "long",
         month: "long",
         day: "numeric"
-      };
-
-      const formattedDate =
-        now.toLocaleDateString("en-US", dateOptions);
+      });
 
       document.getElementById("date").textContent =
-        formattedDate;
+        date.toUpperCase();
     }
 
+    updateClock();
+
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- cute fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600&family=DM+Sans:wght@300;400&family=Italiana&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: #081f58;
+      color: #f8f8ff;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .clock-widget {
+      width: 100%;
+      height: 180px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+    }
+
+    /* tiny stars */
+    .stars {
+      font-family: serif;
+      font-size: 17px;
+      letter-spacing: 15px;
+
+      color: #b7c8ff;
+      margin-bottom: 3px;
+
+      transform: translateX(7px);
+    }
+
+    .time-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+
+      gap: 7px;
+    }
+
+    #time {
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(60px, 10vw, 88px);
+      line-height: 0.95;
+
+      letter-spacing: -4px;
+      font-weight: 600;
+    }
+
+    #ampm {
+      font-family: "DM Sans", sans-serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+
+      color: #b8c6f5;
+
+      margin-top: 10px;
+    }
+
+    #date {
+      margin-top: 11px;
+
+      font-family: "DM Sans", sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+
+      letter-spacing: 3px;
+      text-transform: uppercase;
+
+      color: #d4dcfa;
+    }
+
+    .pretend {
+      margin-top: 10px;
+
+      font-family: "Italiana", serif;
+      font-size: 14px;
+      font-style: italic;
+
+      color: #aebce8;
+    }
+
+    /* little glow without making it look tacky */
+    #time {
+      text-shadow:
+        0 0 12px rgba(190, 205, 255, 0.06);
+    }
+
+    @media (max-width: 500px) {
+      .clock-widget {
+        height: 155px;
+      }
+
+      #time {
+        font-size: 58px;
+      }
+
+      #date {
+        font-size: 11px;
+        letter-spacing: 2px;
+      }
+
+      .pretend {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="clock-widget">
+
+    <div class="stars">
+      ⋆ ✦ ⋆
+    </div>
+
+    <div class="time-row">
+      <div id="time">2:21</div>
+      <div id="ampm">AM</div>
+    </div>
+
+    <div id="date">
+      FRIDAY, SEPTEMBER 4
+    </div>
+
+    <div class="pretend">
+      pretend.org
+    </div>
+
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+
+      const ampm = hours >= 12 ? "PM" : "AM";
+
+      hours = hours % 12;
+      hours = hours || 12;
+
+      const formattedMinutes =
+        minutes.toString().padStart(2, "0");
+
+      document.getElementById("time").textContent =
+        `${hours}:${formattedMinutes}`;
+
+      document.getElementById("ampm").textContent =
+        ampm;
+
+      const date = now.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+      });
+
+      document.getElementById("date").textContent =
+        date.toUpperCase();
+    }
 
     updateClock();
 
